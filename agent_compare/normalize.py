@@ -1,7 +1,3 @@
-# testcase
-with open("test.txt", "r") as file:
-    test = file.read()
-
 import re
 from typing import Iterable
 
@@ -70,5 +66,3 @@ def normalize(text: str) -> str:
 
 def batch_normalize(texts: Iterable[str]) -> list[str]:
     return [normalize(t) for t in texts]
-
-print(normalize(test))

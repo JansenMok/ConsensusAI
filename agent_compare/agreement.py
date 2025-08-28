@@ -4,8 +4,31 @@ from sklearn.metrics.pairwise import cosine_similarity
 from sklearn.metrics import silhouette_score
 from sklearn.cluster import AgglomerativeClustering
 from sentence_transformers import SentenceTransformer
-from .types import Decision
+from .types import Decision  # use with __init__.py only
 
+def _cluster_precomputed(D, distance_threshold: float):
+    """
+    Create an AgglomerativeClustering that accepts a precomputed distance matrix.
+    Works on both new (metric=) and old (affinity=) sklearn versions.
+    """
+    try:
+        # New API (sklearn >= 1.4)
+        return AgglomerativeClustering(
+            metric="precomputed",
+            linkage="average",
+            distance_threshold=distance_threshold,
+            n_clusters=None,
+        )
+    except TypeError:
+        # Old API (sklearn < 1.4)
+        return AgglomerativeClustering(
+            affinity="precomputed",
+            linkage="average",
+            distance_threshold=distance_threshold,
+            n_clusters=None,
+        )
+
+# Sentence-BERT model
 def _embed(texts: List[str], model_name: str = "all-MiniLM-L6-v2") -> np.ndarray:
     model = SentenceTransformer(model_name)
     return model.encode(texts, normalize_embeddings=True)
@@ -19,6 +42,8 @@ def agreement_decision(
     min_cos_threshold: float = 0.70,
     require_silhouette: float = 0.20,
     embed_model: str = "all-MiniLM-L6-v2",
+    clust = _cluster_precomputed(D, distance_threshold),
+    labels = clust.fit_predict(D),
 ) -> Decision:
     assert len(texts) >= 2, "need at least 2 texts"
 
