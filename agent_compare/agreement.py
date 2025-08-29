@@ -6,7 +6,7 @@ from sklearn.cluster import AgglomerativeClustering
 from sentence_transformers import SentenceTransformer
 from .types import Decision  # use with __init__.py only
 
-def _cluster_precomputed(D, distance_threshold: float):
+def _cluster_precomputed(distance_threshold: float):
     """
     Create an AgglomerativeClustering that accepts a precomputed distance matrix.
     Works on both new (metric=) and old (affinity=) sklearn versions.
@@ -29,9 +29,15 @@ def _cluster_precomputed(D, distance_threshold: float):
         )
 
 # Sentence-BERT model
+# def _embed(texts: List[str], model_name: str = "all-MiniLM-L6-v2") -> np.ndarray:
+#     model = SentenceTransformer(model_name)
+#     return model.encode(texts, normalize_embeddings=True)
+_EMBEDDER = None
 def _embed(texts: List[str], model_name: str = "all-MiniLM-L6-v2") -> np.ndarray:
-    model = SentenceTransformer(model_name)
-    return model.encode(texts, normalize_embeddings=True)
+    global _EMBEDDER
+    if _EMBEDDER is None:
+        _EMBEDDER = SentenceTransformer(model_name)
+    return _EMBEDDER.encode(texts, normalize_embeddings=True)
 
 def agreement_decision(
     texts: List[str],
@@ -42,8 +48,6 @@ def agreement_decision(
     min_cos_threshold: float = 0.70,
     require_silhouette: float = 0.20,
     embed_model: str = "all-MiniLM-L6-v2",
-    clust = _cluster_precomputed(D, distance_threshold),
-    labels = clust.fit_predict(D),
 ) -> Decision:
     assert len(texts) >= 2, "need at least 2 texts"
 
@@ -56,10 +60,11 @@ def agreement_decision(
 
     # clustering in distance space
     D = 1.0 - S
-    clust = AgglomerativeClustering(
-        affinity="precomputed", linkage="average",
-        distance_threshold=distance_threshold, n_clusters=None
-    )
+    # clust = AgglomerativeClustering(  # not supported anymore
+    #     affinity="precomputed", linkage="average",
+    #     distance_threshold=distance_threshold, n_clusters=None
+    # )
+    clust = _cluster_precomputed(distance_threshold)
     labels = clust.fit_predict(D)
     unique, counts = np.unique(labels, return_counts=True)
     core_label = int(unique[np.argmax(counts)])
@@ -67,19 +72,26 @@ def agreement_decision(
     core_frac = len(core_idx) / n
 
     # silhouette on cosine distance → silhouette needs similarity or distance; we pass distance
-    sil = silhouette_score(D, labels, metric="precomputed") if len(unique) > 1 else 0.0
+    # sil = silhouette_score(D, labels, metric="precomputed") if len(unique) > 1 else 0.0  # buggy
+    if len(unique) > 1 and n >= 4:
+        sil = float(silhouette_score(D, labels, metric="precomputed"))
+        meets_sil = sil >= require_silhouette
+    else:
+        sil = 0.0
+        meets_sil = True  # don't penalize single cluster / tiny n
 
     agreement = (
         mean_cos >= mean_cos_threshold
         and min_cos >= min_cos_threshold
         and core_frac >= min_core_fraction
-        and sil >= require_silhouette
+        # and sil >= require_silhouette
+        and meets_sil
     )
 
     why = {
         "cluster_sizes": {int(u): int(c) for u, c in zip(unique.tolist(), counts.tolist())},
         "core_fraction": core_frac,
-        "silhouette": float(sil),
+        "silhouette": sil,
         "thresholds": {
             "mean_cos": mean_cos_threshold,
             "min_cos": min_cos_threshold,
@@ -94,6 +106,7 @@ def agreement_decision(
         min_cos=min_cos,
         core_idx=core_idx,
         pairwise=S.tolist(),
-        labels=labels.astype(int).tolist(),
+        # labels=labels.astype(int).tolist(),
+        labels=[int(x) for x in labels.tolist()],
         why=why,
     )
