@@ -1,0 +1,74 @@
+When it comes to **mining Bitcoin specifically**, the most efficient hardware by far are **ASIC miners**—specialized machines designed solely for that purpose. GPUs—including NVIDIA models—are generally **not effective for mining Bitcoin (SHA‑256)** anymore; only older altcoins or algorithm-flexible platforms (like NiceHash) use GPUs as a fallback.
+
+---
+
+### Why ASICs > GPUs for Bitcoin
+
+* The SHA‑256 algorithm that Bitcoin uses is highly optimized in ASICs. Even high-end GPUs like the RTX 4090 or RTX 5080 deliver mere **mega-hashes per second (MH/s)**, while ASIC miners provide **terahashes per second (TH/s)**—a difference of orders of magnitude. ([Investopedia][1])
+
+* For example, a rig with four RTX 4090 GPUs via NiceHash nets around **\$3.89/day** after electricity costs—and would take nearly **5–6 years** just to break even, based on 2024 estimates. ([Investopedia][1])
+
+So if you're focused on Bitcoin mining, ASIC miners are clearly the go-to.
+
+---
+
+### If You're Set on Using NVIDIA GPUs (for Altcoins or General Mining)
+
+Here’s the current ranking of NVIDIA GPUs for mining based on recent data:
+
+#### Top Contenders (2025):
+
+* **RTX 4090**
+  Widely cited across sources as the **top GPU for crypto mining**, particularly for professionals. ([blog.servermania.com][2], [Unihost][3])
+
+* **RTX 5080**
+  TechRadar highlights it as the *best all-around GPU for crypto mining*, offering a great balance of price and performance. ([TechRadar][4])
+
+* **L4 Tensor Core (24 GB)**
+  Featured in latest mining rankings as highly efficient, though less mainstream than gaming GPUs. ([blog.servermania.com][2])
+
+#### High-End Rank Lists (2025):
+
+* A guide published in **August 2025** lists the mining GPU hierarchy as:
+
+  1. RTX 4090
+  2. L4 Tensor Core
+  3. AMD Radeon RX 7900 XTX
+  4. RTX 4070 Ti Super
+     …and so on. ([blog.servermania.com][2])
+
+* A **March 2025** review specifically praises the *ASUS ROG Strix RTX 3090* OC Edition as best suited for home mining rigs. ([Webopedia][5])
+
+* **CherryServers** (January 2025) also leads with the RTX 4090 as the most efficient mining GPU. ([Cherry Servers][6])
+
+---
+
+### Summary Table: NVIDIA GPUs for Crypto Mining (Not Bitcoin SHA-256)
+
+| Rank | GPU Model                      | Strengths                                    |
+| ---- | ------------------------------ | -------------------------------------------- |
+| 1    | RTX 4090                       | Highest performance for crypto mining        |
+| 2    | RTX 5080                       | Best price-performance balance               |
+| 3    | NVIDIA L4 Tensor Core (24 GB)  | Ultra-efficient, modern architecture         |
+| 4    | RTX 4070 Ti Super              | High-end yet slightly more affordable        |
+| —    | RTX 3090 (e.g. ASUS ROG Strix) | Recommended for powerful, home mining setups |
+
+---
+
+### Final Thoughts
+
+* **For Bitcoin (SHA-256):** GPUs—no matter how powerful—are not viable. ASIC miners are essential for meaningful results.
+* **For general crypto mining or altcoins:** The **RTX 4090** stands as the current leader in GPU mining. If you're looking for value, the **RTX 5080** or **L4 Tensor Core** are strong alternatives.
+* Building a multi-GPU rig remains costly, both in hardware and electricity. Always factor in those operating costs before making a decision.
+
+---
+
+If you'd like, I can also help compare specific models on hash rates, power consumption, or price—just let me know your priorities!
+
+[1]: https://www.investopedia.com/news/how-get-established-cryptocurrency-miner/?utm_source=chatgpt.com "How to Start Mining Cryptocurrency"
+[2]: https://blog.servermania.com/best-gpus-for-mining-2025?utm_source=chatgpt.com "Best GPUs for Mining 2025: Complete Guide to Profitable ..."
+[3]: https://unihost.com/blog/top-gpus-for-mining-2025/?utm_source=chatgpt.com "Top 10 Best GPUs for Cryptocurrency Mining in 2025"
+[4]: https://www.techradar.com/best/mining-gpu?utm_source=chatgpt.com "Best mining GPU for mining crypto in 2025"
+[5]: https://www.webopedia.com/crypto/mining/best-gpu-for-mining/?utm_source=chatgpt.com "10 Best GPUs for Mining in 2025"
+[6]: https://www.cherryservers.com/blog/best-gpus-for-mining?utm_source=chatgpt.com "Top 10 Best GPUs for Mining in 2025"
+

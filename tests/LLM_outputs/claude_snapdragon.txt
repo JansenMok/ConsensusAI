@@ -1,0 +1,5 @@
+Snapdragon processors were invented by Qualcomm, an American telecommunications equipment company. The Snapdragon brand was introduced by Qualcomm in 2007, with the first Snapdragon processor (the QSD8250) launching in 2008.
+
+The development was led by Qualcomm's engineering teams, though it wasn't the work of a single inventor. Qualcomm had been working on mobile processors and wireless communication technologies since the 1990s, and Snapdragon represented their entry into the mobile system-on-chip (SoC) market.
+
+The name "Snapdragon" was chosen to convey speed and responsiveness - the idea being that these processors would be quick and agile like the snap of a dragon. Today, Snapdragon processors power millions of smartphones, tablets, and other mobile devices from various manufacturers including Samsung, OnePlus, Xiaomi, and many others.
