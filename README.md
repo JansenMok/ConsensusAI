@@ -10,3 +10,7 @@ The consensus engine queries multiple commercially available LLMs, normalizes th
 - **Agreement Engine**: compute pairwise cosine similarity, cluster responses, and detect consensus.
 - **Extractive consensus**: assemble a bias-minimized answer with overlapping content within responses.
 - **Testing Suite**: pytest cases for normalization and agreement detection.
+### TODO
+- [ ] develop output with minimal bias
+- [ ] write tests for output
+- [ ] develop API querying for all LLMs
